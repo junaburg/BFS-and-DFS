@@ -12,11 +12,10 @@ public class Graph {
     public static int vCount;
 
     public Graph() {
-
         vCount = readInteger("Number of Vertices", 1);
         vList = new ArrayList<VertexList>(vCount + 1);
-
         int i;
+
         for (i = 1; i < vCount + 1; i++) {
             // Add vertex with label number, start with #1
             vList.add(i - 1, new VertexList("" + i));
@@ -106,8 +105,6 @@ public class Graph {
 
     }
 
-    //vList isnt
-    //wasVisited will always be 0 because vCount is in Graph()
     public static ArrayList<String> DFS(VertexList vertexList,int vCount) {
         Depth = new ArrayList<String>();
         boolean[] wasVisited = new boolean[vCount];
@@ -132,10 +129,8 @@ public class Graph {
             }
 
         }index++;
+      }
     }
-    }
-
-
 
     public static void main(String[] args) throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
@@ -146,23 +141,25 @@ public class Graph {
                 "2. Determine DFS \n" +
                 "3. Determine BFS \n" +
                 "4. Quit\n";
+
         //pop up window
-        //if someone knows how to use FileReader that would be nice
         String ans = JOptionPane.showInputDialog(null, menu + "Please Select an option","");
 
         //we can use switch to determine what choice they made
+        //sorry for all the JOptionPane I saw he wanted a pop out menu
         switch(ans){
             //Builds the list
             case "1":
                 try {
-                    System.out.println("Please input whether you would like to run from a file or input vertex's " +
-                            "manually" + "\n" + "Press 1 for manual and"
-                            + " 2 for file");
-                    int choose = input.nextInt();
-                    if (choose == 1) {
+                    String ans2 = JOptionPane.showInputDialog(null,"Please input whether you " +
+                            "would like to run from a file or input vertex's manually \n"
+                            + "Press 1 for manual and 2 for file","");
+                    if (ans2.equals("1")) {
                         graph = new Graph();
-                    } else if (choose == 2) {
-                        graph = new Graph("Adjacency List.txt");
+                    } else if (ans2.equals("2")) {
+                        String filename = JOptionPane.showInputDialog(null,
+                                "Enter File Name Without .txt","");
+                        graph = new Graph(filename + ".txt");
                     }
                     assert graph != null;
                     graph.display();
@@ -176,15 +173,17 @@ public class Graph {
                 try{
                     System.out.println("Would you like to do a Depth First Search?" + "\n" + "Press 1 for Yes and" +
                             " 2 for No");
-                 int choose = input.nextInt();
-                 if (choose == 1) {
-                    System.out.println("Enter Starting Vertex: ");
-                    int b = input.nextInt();
+                    String ans3 = JOptionPane.showInputDialog(null,"Would you like to do a " +
+                            "Depth First Search? \n" + "Press 1 for Yes and 2 for No","");
+                 int choose = Integer.parseInt(ans3);
+                 if (ans3.equals("1")) {
+                    String ans4 = JOptionPane.showInputDialog(null,"Enter Starting Vertex",1);
+                    int b = Integer.parseInt(ans4);
                     choose = b - 1;
                     DFS(vList.get(choose),vCount);
                     System.out.println(Depth);
                  }
-                    break;
+                 break;
                 }catch(NullPointerException e){
                     System.out.println("There is no list");
                     e.getStackTrace();
